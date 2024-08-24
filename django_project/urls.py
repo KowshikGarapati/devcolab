@@ -21,3 +21,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('routes.urls'))
 ]
+"""
+from django.contrib.auth.models import User
+user = User.objects.get(username='your_username')  # Replace with your username
+user.set_password('new_password')  # Replace with the new password
+user.save()
+"""
