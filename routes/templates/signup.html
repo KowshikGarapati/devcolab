@@ -1,15 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE>
+<html>
 <head>
-  <!-- Design by foolishdeveloper.com -->
-    <title>Login</title>
+  <title>Sign Up</title>
+    <link rel="stylesheet" href="css/style.css" type="text/css">
 
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
-    <!--Stylesheet-->
-    <style media="screen">
-      *,
+<style>
+          *,
 *:before,
 *:after{
     padding: 0;
@@ -132,29 +128,36 @@ button{
   margin-right: 4px;
 }
 
-    </style>
+</style>
 </head>
 <body>
-    <div class="background">
+
+<div class="background">
         <div class="shape"></div>
         <div class="shape"></div>
-    </div>
-    <form action="home/" method="POST">
+
+    <form action="register/" method="GET">
         {% csrf_token %}
         <h3>Login Here</h3>
 
         <label for="username">Username</label>
-        <input type="text" placeholder="Email or Phone" id="username" name="username">
+        <input type="text" placeholder="Email or Phone" id="username" name="username" >
 
         <label for="password">Password</label>
         <input type="password" placeholder="Password" id="password" name="password">
 
-        <button type="submit" value="Submit">Log In</button>
+        <label for="password">Confirm Password</label>
+        <input type="password" placeholder="Confirm Password" id="confirm password" name="confirm password">
+
+
+        <button type="submit" value="Submit">Sign Up</button>
         <div class="social">
-            <a href="signup/">Register</a>
+            
           <!--<div class="go"><i class="fab fa-google"></i>  Google</div>
           <div class="fb"><i class="fab fa-facebook"></i>  Facebook</div>-->
+            <a href="/">Login</a>
         </div>
     </form>
+</div>
 </body>
 </html>

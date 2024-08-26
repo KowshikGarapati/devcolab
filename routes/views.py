@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.views.decorators.csrf import csrf_protect
 from django.http import HttpResponse
 from .models import User
@@ -24,7 +24,20 @@ def login(request):
     return render(request, 'login.html')
 
 def home(request):
-    print(request.POST.get("username"))
-    return HttpResponse(b'home page')
+    return render(request, "profile.html", {"user":None})
+
+def register(request):
+    newusername = request.GET.get("username")
+    newpassword = request.GET.get("password")
+    newuser = User(username=newusername, password=newpassword)
+    newuser.full_clean()
+    newuser.save()
+    print(newusername  ,newpassword)
+    """return redirect(home, {"user":newuser})"""
+    return HttpResponse(b'register')
+    
+
+def signup(request):
+    return render(request, "signup.html")
     
     
