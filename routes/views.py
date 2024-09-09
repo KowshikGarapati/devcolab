@@ -1,4 +1,5 @@
 from django.shortcuts import redirect, render
+from django.urls import reverse
 from django.views.decorators.csrf import csrf_protect
 from django.http import HttpResponse
 from .models import User
@@ -23,18 +24,28 @@ def verify(request):
 def login(request):
     return render(request, 'login.html')
 
+def profile(request, username):
+    return render(request, "profile.html", {"username": username})
+
 def home(request):
-    return render(request, "profile.html", {"user":None})
+    return render(request, "home.html")
 
 def register(request):
     newusername = request.GET.get("username")
     newpassword = request.GET.get("password")
-    newuser = User(username=newusername, password=newpassword)
-    newuser.full_clean()
-    newuser.save()
-    print(newusername  ,newpassword)
-    """return redirect(home, {"user":newuser})"""
-    return HttpResponse(b'register')
+    newconfirmpwd = request.GET.get("confirm password")
+    if newpassword == newconfirmpwd:
+        newuser = User(username=newusername, password=newpassword)
+        #newuser.full_clean()
+        newuser.save()
+        global USER
+        USER = newuser
+        print(newusername  ,newpassword)
+        """return redirect(home, {"user":newuser})"""
+        #return render(request, 'home.html')
+        return redirect(newuser.username)
+    signup_url = reverse('signup')
+    return redirect(signup_url)  
     
 
 def signup(request):
