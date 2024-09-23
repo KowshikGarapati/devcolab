@@ -24,6 +24,12 @@ def verify(request):
 def login(request):
     return render(request, 'login.html')
 
+def account(request):
+    if request.session.get('username'):
+        return render(request, 'profile.html', {'username': request.session.get('username')})
+    else:
+        return redirect(reverse('signup'))
+
 def profile(request, username):
     return render(request, "profile.html", {"username": username})
 
@@ -38,12 +44,11 @@ def register(request):
         newuser = User(username=newusername, password=newpassword)
         #newuser.full_clean()
         newuser.save()
-        global USER
-        USER = newuser
         print(newusername  ,newpassword)
+        request.session['username'] = newuser.username
         """return redirect(home, {"user":newuser})"""
         #return render(request, 'home.html')
-        return redirect(newuser.username)
+        return redirect('/'+ str(newuser.username) + '/')
     signup_url = reverse('signup')
     return redirect(signup_url)  
     
