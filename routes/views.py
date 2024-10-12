@@ -16,13 +16,18 @@ def verify(request):
     username = user.username
     pwd = user.password
     if Username == username and Password == pwd:
-        return HttpResponse(b' login True')
+        request.session["username"] = Username
+        return redirect('/')
     else:
-        return HttpResponse(b'login False')
+        return redirect('accounts/login/')
         
 #@csrf_protect
 def login(request):
     return render(request, 'login.html')
+
+def logout(request):
+    request.session.flush()
+    return redirect('/')
 
 def account(request):
     if request.session.get('username'):
@@ -48,7 +53,7 @@ def register(request):
         request.session['username'] = newuser.username
         """return redirect(home, {"user":newuser})"""
         #return render(request, 'home.html')
-        return redirect('/'+ str(newuser.username) + '/')
+        return redirect('/')
     signup_url = reverse('signup')
     return redirect(signup_url)  
     
