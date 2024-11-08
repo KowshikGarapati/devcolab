@@ -1,7 +1,7 @@
 <html>
 <head>
   <title>
-   Instagram Profile
+   {{userprofile.user.username}}
   </title>
   <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
@@ -120,33 +120,33 @@
    <a class="brand" href="#">
     <img alt="Instagram Logo" height="50" src="https://oaidalleapiprodscus.blob.core.windows.net/private/org-BVbpSZmLndA7MfHIxv2ahIKS/user-IBY8IaMXtVn7IVIdZeyvjx16/img-yuWk0ve1W27Ykf0VQJ9gCzJL.png?st=2024-09-05T14%3A45%3A25Z&amp;se=2024-09-05T16%3A45%3A25Z&amp;sp=r&amp;sv=2024-08-04&amp;sr=b&amp;rscd=inline&amp;rsct=image/png&amp;skoid=d505667d-d6c1-4a0a-bac7-5c84a87759f8&amp;sktid=a48cca56-e6da-484e-a814-9c849652bcb3&amp;skt=2024-09-04T21%3A52%3A02Z&amp;ske=2024-09-05T21%3A52%3A02Z&amp;sks=b&amp;skv=2024-08-04&amp;sig=%2B0hcNTKTxrU1cUGjg7NaPfWKqndjEe/o4136P5JB4V4%3D" width="100">
    </a>
-   <a class="active" href="#">
+   <a class="active" href="{% home %}">
     <i class="fas fa-home">
     </i>
     Home
    </a>
-   <a href="#">
+   <a href="/search">
     <i class="fas fa-search">
     </i>
     Search
    </a>
-   <a href="#">
+   <a href="/explore">
     <i class="fas fa-compass">
     </i>
     Explore
    </a>
-   
-   <a href="#">
+
+   <a href="/messages">
     <i class="fas fa-envelope">
     </i>
     Messages
    </a>
-   <a href="#">
+   <a href="/notifications">
     <i class="fas fa-heart">
     </i>
     Notifications
    </a>
-   <a href="#">
+   <a href="/create">
     <i class="fas fa-plus-square">
     </i>
     Create
@@ -156,7 +156,7 @@
     </i>
     Profile
    </a>
-   <a href="#">
+   <a href="/more">
     <i class="fas fa-bars">
     </i>
     More
@@ -174,25 +174,33 @@
     </div>
     <div class="profile-info ms-4">
      <h1>
-      {{username}}
+      {{ userprofile.user.username }}
      </h1>
      <div class="stats">
       <span>
        0 posts
       </span>
       <span>
-       0 followers
+       {{ userprofile.followers.count() }} followers
       </span>
       <span>
-       2 following
+       {{ userprofile.following.count() }} following
       </span>
      </div>
      <div class="actions">
+         {% if userprofile in request.user.profile.following.all %}
+             <form action="{% url 'unfollow_user' user.username %}" method="post">
+                 {% csrf_token %}
+                 <button type="submit">Unfollow</button>
+             </form>
+         {% else %}
+             <form action="{% url 'follow_user' user.username %}" method="post">
+                 {% csrf_token %}
+                 <button type="submit">Follow</button>
+             </form>
+         {% endif %}
       <button class="btn btn-outline-secondary">
-       Edit Profile
-      </button>
-      <button class="btn btn-outline-secondary">
-       View archive
+       Message
       </button>
       <i class="fas fa-cog">
       </i>
@@ -220,6 +228,6 @@
     </p>
    </div>
   </div>
- 
+
 
 </body></html>

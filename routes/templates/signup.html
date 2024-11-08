@@ -139,9 +139,11 @@ button{
     <form action="register/" method="GET">
         {% csrf_token %}
         <h3>Signup</h3>
+        <label for="mail">Mail</label>
+        <input type="text" placeholder="Email or Phone" id="mail" name="mail" >
 
         <label for="username">Username</label>
-        <input type="text" placeholder="Email or Phone" id="username" name="username" >
+        <input type="text" placeholder="example: john doe" id="username" name="username" >
 
         <label for="password">Password</label>
         <input type="password" placeholder="Password" id="password" name="password">
