@@ -20,7 +20,20 @@ class User(models.Model):
         usnme = str(self.username)
         pwd = str(self.password)
         id = str(self.id)
-        return id + ':'+usnme +" : "+pwd
+        return f'{self.id} {self.username} {self.email}'
+    def to_dict(self):
+        model_dict = {
+            "id":self.id,
+            "username":self.username,
+            "email":self.email,
+            "linkedin":self.linkedin_url,
+            "github":self.github_url,
+            "followers":self.followers.count(),
+            "following":self.following.count(),
+            "bio":self.bio
+
+        }
+        return model_dict
 
 
 class UserProfile(models.Model):
