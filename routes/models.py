@@ -1,5 +1,6 @@
 from enum import unique
 from django.db import models
+from django import forms
 
 
 # Create your models here.
@@ -8,6 +9,7 @@ class User(models.Model):
     username = models.CharField(max_length=50)
     password = models.CharField(max_length=50)
     email = models.EmailField(max_length=50)
+    profile_picture = models.ImageField(upload_to='profilepictures/', blank=true)
     bio = models.TextField(max_length=200, blank=True)
     followers = models.ManyToManyField('self', related_name='followers')
     following = models.ManyToManyField('self', related_name='following')
@@ -36,13 +38,8 @@ class User(models.Model):
         return model_dict
 
 
-class UserProfile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    bio = models.TextField(max_length=200)
-    followers = models.ManyToManyField('self', related_name='followers')
-    following = models.ManyToManyField('self', related_name='following')
-    #implement skills later(13/10/24)
-    github_url = models.URLField(max_length=200)
-    linkedin_url = models.URLField(max_length=200)
-    objects = models.Manager()
 
+class editform(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ["profile_picture", "username", "bio", "github_url", "linkedin_url",]
