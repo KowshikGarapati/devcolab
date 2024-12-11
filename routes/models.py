@@ -9,7 +9,7 @@ class User(models.Model):
     username = models.CharField(max_length=50)
     password = models.CharField(max_length=50)
     email = models.EmailField(max_length=50)
-    profile_picture = models.ImageField(upload_to='profilepictures/', blank=true)
+    profile_picture = models.ImageField(upload_to='profilepictures/', blank=True)
     bio = models.TextField(max_length=200, blank=True)
     followers = models.ManyToManyField('self', related_name='followers')
     following = models.ManyToManyField('self', related_name='following')
@@ -22,7 +22,7 @@ class User(models.Model):
         usnme = str(self.username)
         pwd = str(self.password)
         id = str(self.id)
-        return f'{self.id} {self.username} {self.email}'
+        return f'{self.id} {self.username} {self.email} {self.password}'
     def to_dict(self):
         model_dict = {
             "id":self.id,

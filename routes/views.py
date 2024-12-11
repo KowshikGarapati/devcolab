@@ -2,7 +2,7 @@ from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_protect
 from django.http import HttpResponse
-from .models import User, UserProfile
+from .models import User, editform
 import random, requests, json
 
 
@@ -115,5 +115,12 @@ def emailverify(request):
 
 def signup(request):
     return render(request, "signup.html")
+
+def editprofile(request):
+    uid = request.session.get('id')
+    user = User.objects.get(id=uid)
+    return render(request, "editprofile.html", {"form":editform(instance=user)}) 
     
+def save_changes(request):
+    return HttpResponse(request.POST.get("bio"))
     

@@ -4,6 +4,12 @@
 		<title>edit</title>
 	</head>
 	<body>
-		{{form}}
+		<form method="post" action="/save_changes">
+    	{{form.as_p}}
+		{% csrf_token %}
+		<button type="submit">submit</button>
+		</form>
+
+
 	</body>
 </html>
